@@ -8,7 +8,7 @@
         <div class="card-dashboard">
             <div class="left-card-dashboard">
                 <h2 class="celsius">5°</h2>
-                <h4 class="city">Arras {{  }}</h4>
+                <h4 class="city">Arras</h4>
                 <p>1°/6° Ressenti 3°</p>
                 <p>Vendredi, 11:41</p>
             </div>
@@ -168,8 +168,8 @@ export default {
         return {
                 currentWeatherCity: null,
                 forecastingWeatherCity: null,
-                weather:{},
-                forecasting:{},
+                currentWeatherData:{},
+                forecastingData:{},
         }
     },
     //Api qui permet de récupérer la position actuelle en utilisant la latitude et la longitude ce qui donne la position.coords
@@ -188,21 +188,43 @@ export default {
         },
         //methode pour obtenir la meteo actuelle de la ville courante (header meteo)
         async getCurrentWeatherForCurrentCity(coordinates){
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.latitude}&lon=${coordinates.longitude}&appid=5bdc0b308ad30be2f18120d0db9cbfca`);
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=metric&dt=1586468027&appid=5bdc0b308ad30be2f18120d0db9cbfca`);
             const currentWeatherCity = await response.json();
-            const weather = {
-                coord : currentWeatherCity.coordinates
-
+            const currentWeatherData = {
+                city: currentWeatherCity.name,
+                currentTemp: currentWeatherCity.main.temp,
+                minTemp:currentWeatherCity.main.temp_min,
+                maxTemp:currentWeatherCity.main.temp_max,
+                feelTemp:currentWeatherCity.main.feels_like,
+                iconCurrentWeather:currentWeatherCity.weather[0].icon,
             }
-            console.log(currentWeatherCity)
-            return currentWeatherCity;
+            console.log(currentWeatherData)
+            return currentWeatherData;
         },
         //methode pour récupérer les prévisions météo de la ville en question (previsions)
         async getForecastingForCurrentCity(coordinates){
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.latitude}&lon=${coordinates.longitude}&appid=5bdc0b308ad30be2f18120d0db9cbfca`);
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=metric&dt=1586468027&appid=5bdc0b308ad30be2f18120d0db9cbfca`);
             const forecastingWeatherCity = await response.json();
-            console.log(this.forecastingWeatherCity)
-            return forecastingWeatherCity;
+            const forecastingData = {
+                //données méteo actuelles
+                currentHour: forecastingWeatherCity.current.dt,
+                currentSunrise: forecastingWeatherCity.current.sunrise,
+                currentSunset: forecastingWeatherCity.current.sunset,
+                currentUv: forecastingWeatherCity.current.uvi,
+                currentWind: forecastingWeatherCity.current.wind_speed,
+                //données météo par heure
+                hour: forecastingWeatherCity.hourly[0].dt,
+                hourTemp: forecastingWeatherCity.hourly[0].temp,
+                hourHumidity: forecastingWeatherCity.hourly[0].humidity,
+                //données météo par jour
+                hourDaily: forecastingWeatherCity.daily[0].dt,
+                tempMinDaily: forecastingWeatherCity.daily[0].temp.min,
+                tempMaxDaily: forecastingWeatherCity.daily[0].temp.max,
+                humidityDaily: forecastingWeatherCity.daily[0].humidity,
+                
+            }
+            console.log(forecastingData)
+            return forecastingData;
         }
             
     },
