@@ -8,7 +8,7 @@
         <div class="card-dashboard">
             <div class="left-card-dashboard">
                 <h2 class="celsius">5°</h2>
-                <h4 class="city">Arras</h4>
+                <h4 class="city">Arras {{  }}</h4>
                 <p>1°/6° Ressenti 3°</p>
                 <p>Vendredi, 11:41</p>
             </div>
@@ -164,6 +164,44 @@
 <script>
 export default {
     name:'HomeView',
+    data() {
+        return {
+                currentWeatherCity: null,
+                forecastingWeatherCity: null,
+                weather:'',
+        }
+    },
+    //Api qui permet de récupérer la position actuelle en utilisant la latitude et la longitude ce qui donne la position.coords
+    async mounted() {
+        await this.getCurrentPosition();
+
+    },
+    methods: {
+        //methode pour récupérer la currentPosition en fonction de la latitude et la longitude
+            async getCurrentPosition(){
+            navigator.geolocation.getCurrentPosition(async position => {
+                const coordinates = position.coords;
+                await this.getCurrentWeatherForCurrentCity(coordinates);
+                await this.getForecastingForCurrentCity(coordinates)
+            })
+        },
+        //methode pour obtenir la meteo actuelle de la ville courante (header meteo)
+        async getCurrentWeatherForCurrentCity(coordinates){
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.latitude}&lon=${coordinates.longitude}&appid=5bdc0b308ad30be2f18120d0db9cbfca`);
+            const currentWeatherCity = await response.json();
+
+            console.log(currentWeatherCity)
+            return currentWeatherCity;
+        },
+        //methode pour récupérer les prévisions météo de la ville en question (previsions)
+        async getForecastingForCurrentCity(coordinates){
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.latitude}&lon=${coordinates.longitude}&appid=5bdc0b308ad30be2f18120d0db9cbfca`);
+            const forecastingWeatherCity = await response.json();
+            return forecastingWeatherCity;
+            
+        }
+            
+    },
 }
 </script>
 
