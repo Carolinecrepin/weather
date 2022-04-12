@@ -168,7 +168,8 @@ export default {
         return {
                 currentWeatherCity: null,
                 forecastingWeatherCity: null,
-                weather:'',
+                weather:{},
+                forecasting:{},
         }
     },
     //Api qui permet de récupérer la position actuelle en utilisant la latitude et la longitude ce qui donne la position.coords
@@ -189,7 +190,10 @@ export default {
         async getCurrentWeatherForCurrentCity(coordinates){
             const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.latitude}&lon=${coordinates.longitude}&appid=5bdc0b308ad30be2f18120d0db9cbfca`);
             const currentWeatherCity = await response.json();
+            const weather = {
+                coord : currentWeatherCity.coordinates
 
+            }
             console.log(currentWeatherCity)
             return currentWeatherCity;
         },
@@ -197,8 +201,8 @@ export default {
         async getForecastingForCurrentCity(coordinates){
             const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.latitude}&lon=${coordinates.longitude}&appid=5bdc0b308ad30be2f18120d0db9cbfca`);
             const forecastingWeatherCity = await response.json();
+            console.log(this.forecastingWeatherCity)
             return forecastingWeatherCity;
-            
         }
             
     },
