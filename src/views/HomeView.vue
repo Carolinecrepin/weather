@@ -216,11 +216,22 @@ export default {
                 hour: forecastingWeatherCity.hourly[0].dt,
                 hourTemp: forecastingWeatherCity.hourly[0].temp,
                 hourHumidity: forecastingWeatherCity.hourly[0].humidity,
-                //données météo par jour
+                //données météo par jour (actuel)
                 hourDaily: forecastingWeatherCity.daily[0].dt,
                 tempMinDaily: forecastingWeatherCity.daily[0].temp.min,
                 tempMaxDaily: forecastingWeatherCity.daily[0].temp.max,
                 humidityDaily: forecastingWeatherCity.daily[0].humidity,
+                //données météo jour [1]
+                hourDaily1: forecastingWeatherCity.daily[1].dt,
+                tempMinDaily1: forecastingWeatherCity.daily[1].temp.min,
+                tempMaxDaily1: forecastingWeatherCity.daily[1].temp.max,
+                humidityDaily1: forecastingWeatherCity.daily[1].humidity,
+                //données météo jour [2]
+                hourDaily2: forecastingWeatherCity.daily[2].dt,
+                tempMinDaily2: forecastingWeatherCity.daily[2].temp.min,
+                tempMaxDaily2: forecastingWeatherCity.daily[2].temp.max,
+                humidityDaily2: forecastingWeatherCity.daily[2].humidity,
+
                 
             }
             console.log(forecastingData)
