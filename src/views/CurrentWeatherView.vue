@@ -13,42 +13,14 @@
                 <p>Vendredi, 11:41</p>
             </div>
             <div class="right-card-dashboard">
-                <!--affichage image en fonction du rendu data des icones-->
-                <img src="../assets/sun_img.png" alt="sun" v-if="currentWeather.iconCurrentWeather === '01d'">
-                <img src="../assets/sun-cloud-img.png" alt="sun-cloud" v-else-if="currentWeather.iconCurrentWeather === '02d'">
-                <img src="../assets/light-clouds-img.png" alt="light-cloud" v-else-if="currentWeather.iconCurrentWeather === '03d'">
-                <img src="../assets/dark-clouds-img.png" alt="dark-cloud" v-else-if="currentWeather.iconCurrentWeather === '04d'">
-                <img src="../assets/rain-img.png" alt="rain" v-else-if="currentWeather.iconCurrentWeather === '09d'">
-                <img src="../assets/rain-sun-cloud-img.png" alt="rain-sun-cloud" v-else-if="currentWeather.iconCurrentWeather === '10d'">
-                <img src="../assets/storm-img.png" alt="storm" v-else-if="currentWeather.iconCurrentWeather === '11d'">
-                <img src="../assets/snow-img.png" alt="snow" v-else-if="currentWeather.iconCurrentWeather === '13d'">
-                <img src="../assets/frog-img.png" alt="frog" v-else-if="currentWeather.iconCurrentWeather === '50d'">
+                <CurrentWeatherIcon v-bind:currentWeather="currentWeather"/>
             </div>
         </div>
         <!--card meteo par heure-->
         <div class="card">
             <div class="hours-meteo">
                 <p><b>{{forecastingWeatherCity.hour}}</b></p>
-                <!-- day icon -->
-                <img src="../assets/sun_icon.png" alt="sun" v-if="forecastingWeatherCity.iconHour === '01d'">
-                <img src="../assets/sun-cloud-icon.png" alt="sun-cloud" v-else-if="forecastingWeatherCity.iconHour === '02d'">
-                <img src="../assets/cloudy_icon.png" alt="light-cloud" v-else-if="forecastingWeatherCity.iconHour === '03d'">
-                <img src="../assets/cloudy_icon.png" alt="dark-cloud" v-else-if="forecastingWeatherCity.iconHour === '04d'">
-                <img src="../assets/rain-icon.png" alt="rain" v-else-if="forecastingWeatherCity.iconHour === '09d'">
-                <img src="../assets/rain-sun-cloud_icon.png" alt="rain-sun-cloud" v-else-if="forecastingWeatherCity.iconHour === '10d'">
-                <img src="../assets/storm_icon.png" alt="storm" v-else-if="forecastingWeatherCity.iconHour === '11d'">
-                <img src="../assets/snow_icon.png" alt="snow" v-else-if="forecastingWeatherCity.iconHour === '13d'">
-                <img src="../assets/frog_icon.png" alt="frog" v-else-if="forecastingWeatherCity.iconHour === '50d'">
-                <!--night icon -->
-                <img src="../assets/sun_icon.png" alt="sun" v-else-if="forecastingWeatherCity.iconHour === '01n'">
-                <img src="../assets/sun-cloud-icon.png" alt="sun-cloud" v-else-if="forecastingWeatherCity.iconHour === '02n'">
-                <img src="../assets/cloudy_icon.png" alt="light-cloud" v-else-if="forecastingWeatherCity.iconHour === '03n'">
-                <img src="../assets/cloudy_icon.png" alt="dark-cloud" v-else-if="forecastingWeatherCity.iconHour === '04n'">
-                <img src="../assets/rain-icon.png" alt="rain" v-else-if="forecastingWeatherCity.iconHour === '09n'">
-                <img src="../assets/rain-sun-cloud_icon.png" alt="rain-sun-cloud" v-else-if="forecastingWeatherCity.iconHour === '10n'">
-                <img src="../assets/storm_icon.png" alt="storm" v-else-if="forecastingWeatherCity.iconHour === '11n'">
-                <img src="../assets/snow_icon.png" alt="snow" v-else-if="forecastingWeatherCity.iconHour === '13n'">
-                <img src="../assets/frog_icon.png" alt="frog" v-else-if="forecastingWeatherCity.iconHour === '50n'">
+                <HoursWeatherIcon v-bind:forecastingWeatherCity="forecastingWeatherCity"/>
                 <p>{{forecastingWeatherCity.hourTemp}}°</p>
                 <p><img src="../assets/droplet.png" alt="weather-icon" class="weather-icon"/> {{forecastingWeatherCity.hourHumidity}}%</p>
             </div>
@@ -183,14 +155,18 @@
 </template>
 
 <script>
+import CurrentWeatherIcon from "@/components/CurrentWeatherIcon.vue"
+import HoursWeatherIcon from "@/components/HoursWeatherIcon.vue"
 export default {
     name:'HomeView',
+    components: {
+        CurrentWeatherIcon,
+        HoursWeatherIcon,
+    },
     data() {
         return {
-                currentWeather: {
-                    iconCurrentWeather:""
-                },
-                forecastingWeatherCity: {},
+            currentWeather: {},
+            forecastingWeatherCity: {},
         }
     },
     //Api qui permet de récupérer la position actuelle en utilisant la latitude et la longitude ce qui donne la position.coords
