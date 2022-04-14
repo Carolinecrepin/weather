@@ -188,7 +188,6 @@ export default {
             const currentWeather = await response.json();
             const currentWeatherDatas = {
                 city: currentWeather.name,          //nom de la ville courante
-                 //var date = new date(UNIX_Timestamp * 1000);
                 currentTemp: currentWeather.main.temp,  //température actuelle
                 minTemp:currentWeather.main.temp_min,   //température minimale
                 maxTemp:currentWeather.main.temp_max,   //température maximale
