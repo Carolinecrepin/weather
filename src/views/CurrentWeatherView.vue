@@ -9,7 +9,7 @@
             <div class="left-card-dashboard">
                 <h2 class="celsius">{{currentWeather.currentTemp}}°</h2>
                 <h4 class="city">{{currentWeather.city}}</h4>
-                <p>{{forecastingWeatherCity.tempMinDaily}}°/{{forecastingWeatherCity.tempMaxDaily}}° Ressenti {{currentWeather.feelTemp}}°</p>
+                <p>{{forecastWeather.tempMinDaily}}°/{{forecastWeather.tempMaxDaily}}° Ressenti {{currentWeather.feelTemp}}°</p>
                 <p>Vendredi, 11:41</p>
             </div>
             <div class="right-card-dashboard">
@@ -19,10 +19,10 @@
         <!--card meteo par heure-->
         <div class="card">
             <div class="hours-meteo">
-                <p><b>{{forecastingWeatherCity.hour}}</b></p>
-                <HoursWeatherIcon v-bind:forecastingWeatherCity="forecastingWeatherCity"/>
-                <p>{{forecastingWeatherCity.hourTemp}}°</p>
-                <p><img src="../assets/droplet.png" alt="weather-icon" class="weather-icon"/> {{forecastingWeatherCity.hourHumidity}}%</p>
+                <p><b>{{forecastWeather.hour}}</b></p>
+                <HoursWeatherIcon v-bind:forecastWeather="forecastWeather"/>
+                <p>{{forecastWeather.hourTemp}}°</p>
+                <p><img src="../assets/droplet.png" alt="weather-icon" class="weather-icon"/> {{forecastWeather.hourHumidity}}%</p>
             </div>
              <div class="hours-meteo">
                 <p><b>12:00</b></p>
@@ -65,11 +65,11 @@
         <div class="card-row">
                 <div class="day-weather">
                     <p>Aujourd'hui</p>
-                    <p><img src="../assets/droplet.png" alt="weather-icon" class="weather-icon"/> {{forecastingWeatherCity.humidityDaily}} %</p>
+                    <p><img src="../assets/droplet.png" alt="weather-icon" class="weather-icon"/> {{forecastWeather.humidityDaily}} %</p>
                     <img src="../assets/rain-icon.png" alt="weather-icon" width="25" height="25" class="weather-icon"/>
                     <img src="../assets/rain-icon.png" alt="weather-icon" width="25" height="25" class="weather-icon"/>
-                    <p>{{forecastingWeatherCity.tempMinDaily}} °</p>
-                    <p>{{forecastingWeatherCity.tempMaxDaily}} °</p>
+                    <p>{{forecastWeather.tempMinDaily}} °</p>
+                    <p>{{forecastWeather.tempMaxDaily}} °</p>
                 </div>
                 <div class="day-weather">
                     <p>Aujourd'hui</p>
@@ -124,12 +124,12 @@
         <div class="card">
             <div class="sunrise-card">
                 <p class="title-card"><b>Lever de soleil</b></p>
-                <p>{{forecastingWeatherCity.currentSunrise}}</p>
+                <p>{{forecastWeather.currentSunrise}}</p>
                 <img src="../assets/sunlight-img.png" alt="weather-icon" width="150" height="" class="sunset-sunlight"/>
             </div>
             <div class="sunset-card">
                 <p class="title-card"><b>Coucher de soleil</b></p>
-                <p>{{forecastingWeatherCity.currentSunset}}</p>
+                <p>{{forecastWeather.currentSunset}}</p>
                 <img src="../assets/sunset-img.png" alt="weather-icon" width="150" height="" class="sunset-sunlight"/>
             </div>
         </div>
@@ -138,17 +138,17 @@
             <div class="info-meteo">
                 <img src="../assets/sun.png" alt="weather-icon" width="50" height="" class="weather-icon"/>
                 <p><b>Indice UV</b></p>
-                <p>{{forecastingWeatherCity.currentUv}}</p>
+                <p>{{forecastWeather.currentUv}}</p>
             </div>
             <div class="info-meteo">
                 <img src="../assets/wind.png" alt="weather-icon" width="50" height="" class="weather-icon"/>
                 <p><b>Vent</b></p>
-                <p>{{forecastingWeatherCity.currentWind}}</p>
+                <p>{{forecastWeather.currentWind}}</p>
             </div>
             <div class="info-meteo">
                 <img src="../assets/droplet-img.png" alt="weather-icon" width="40" height="" class="weather-icon"/>
                 <p><b>Humidité</b></p>
-                <p>{{forecastingWeatherCity.humidityDaily}}%</p>
+                <p>{{forecastWeather.humidityDaily}}%</p>
             </div>
         </div>
     </div>
@@ -166,7 +166,7 @@ export default {
     data() {
         return {
             currentWeather: {},
-            forecastingWeatherCity: {},
+            forecastWeather: {},
         }
     },
     //Api qui permet de récupérer la position actuelle en utilisant la latitude et la longitude ce qui donne la position.coords
@@ -178,12 +178,12 @@ export default {
             async getCurrentPosition(){
             navigator.geolocation.getCurrentPosition(async position => {
                 const coordinates = position.coords;
-                await this.getCurrentWeatherForCurrentCity(coordinates);
-                await this.getForecastingForCurrentCity(coordinates)
+                await this.getCurrentWeather(coordinates);
+                await this.getForecastWeather(coordinates)
             })
         },
         //methode pour obtenir la meteo actuelle de la ville courante (header meteo)
-        async getCurrentWeatherForCurrentCity(coordinates){
+        async getCurrentWeather(coordinates){
             const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=metric&dt=1586468027&appid=5bdc0b308ad30be2f18120d0db9cbfca`);
             const currentWeather = await response.json();
             const currentWeatherDatas = {
@@ -199,31 +199,39 @@ export default {
 
         },
         //methode pour récupérer les prévisions météo de la ville en question (previsions)
-        async getForecastingForCurrentCity(coordinates){
+        async getForecastWeather(coordinates){
             const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=metric&dt=1586468027&appid=5bdc0b308ad30be2f18120d0db9cbfca`);
-            const forecastingWeatherCity = await response.json();
+            const forecastWeather = await response.json();
             const forecastingDatas = {
                 //données méteo actuelles
-                currentHour: forecastingWeatherCity.current.dt,         //heure actuelle     
-                currentSunrise: forecastingWeatherCity.current.sunrise,     //lever du soleil du jour
-                currentSunset: forecastingWeatherCity.current.sunset,       //coucher du soleil du jour
-                currentUv: forecastingWeatherCity.current.uvi,              //indice uv actuel
-                currentWind: forecastingWeatherCity.current.wind_speed,     //vitesse du vent actuelle
-                currentIcon: forecastingWeatherCity.current.weather[0].icon,   //icone météo actuelle
+                currentHour: forecastWeather.current.dt,         //heure actuelle     
+                currentSunrise: forecastWeather.current.sunrise,     //lever du soleil du jour
+                currentSunset: forecastWeather.current.sunset,       //coucher du soleil du jour
+                currentUv: forecastWeather.current.uvi,              //indice uv actuel
+                currentWind: forecastWeather.current.wind_speed,     //vitesse du vent actuelle
+                currentIcon: forecastWeather.current.weather[0].icon,   //icone météo actuelle
                 //données météo par heure
-                hour: forecastingWeatherCity.hourly[0].dt,                  //heure
-                hourTemp: forecastingWeatherCity.hourly[0].temp,            //température de l'heure
-                hourHumidity: forecastingWeatherCity.hourly[0].humidity,    //humidité de l'heure
-                iconHour: forecastingWeatherCity.hourly[13].weather[0].icon,
+                hour: forecastWeather.hourly[0].dt,                  //heure
+                hourTemp: forecastWeather.hourly[0].temp,            //température de l'heure
+                hourHumidity: forecastWeather.hourly[0].humidity,    //humidité de l'heure
+                iconHour: forecastWeather.hourly[13].weather[0].icon,
                 //données météo par jour 
-                hourDaily: forecastingWeatherCity.daily[0].dt,              //heure du jour
-                tempMinDaily: forecastingWeatherCity.daily[0].temp.min,     //température minimale du jour
-                tempMaxDaily: forecastingWeatherCity.daily[0].temp.max,     //température max du jour
-                humidityDaily: forecastingWeatherCity.daily[0].humidity,    //taux d'humidité du jour 
-                iconDaily:forecastingWeatherCity.daily[0].weather[0].icon,     //icone du jour
+                hourDaily: forecastWeather.daily[0].dt,              //heure du jour
+                tempMinDaily: forecastWeather.daily[0].temp.min,     //température minimale du jour
+                tempMaxDaily: forecastWeather.daily[0].temp.max,     //température max du jour
+                humidityDaily: forecastWeather.daily[0].humidity,    //taux d'humidité du jour 
+                iconDaily:forecastWeather.daily[0].weather[0].icon,     //icone du jour
             }
             //console.log(forecastingDatas)
-            return this.forecastingWeatherCity = forecastingDatas;
+            return this.forecastWeather = forecastingDatas;
+        },
+
+        async setCurrentWeather(forecastWeather){
+            return 
+        },
+
+        async setForecastWeather(currentWeather){
+            return
         }
             
     },
