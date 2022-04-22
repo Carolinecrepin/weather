@@ -14,7 +14,7 @@
             forecastWeather.tempMaxDaily
           }}° Ressenti {{ currentWeather.feelTemp }}°
         </p>
-        <p>Vendredi, 11:41</p>
+        <p>Vendredi,{{forecastWeather.currentHour}} </p>
         <!--bouton pour ajouter une ville en favoris-->
         <button class="favorite-btn" @click="addToFavoriteCity">
           Ajouter aux favoris
@@ -444,11 +444,12 @@ export default {
         this.currentWeather = weatherFactory.setCurrentWeather(currentWeather);
       });
     },
+    //methode pour ajouter un ville (current) en favoris en faisant un tableau d'objets qui contient les coords et la ville
     async addToFavoriteCity() {
       //la const cities est un objet contenant des propriétés
       const city = {
-        city: this.currentWeather.city,
-        coords: {
+        city: this.currentWeather.name,   //ville courante
+        coords: {                         //coordonées courante
           latitude: this.currentWeather.latitude,
           longitude: this.currentWeather.longitude,
         },
@@ -468,6 +469,7 @@ export default {
         localStorage.setItem("cities", JSON.stringify(citySaveInLocalStorage));
       }
     },
+    
   },
 };
 </script>
