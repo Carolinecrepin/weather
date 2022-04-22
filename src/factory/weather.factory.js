@@ -1,6 +1,6 @@
 export default {
     //methode pour recuperer les données voulues dans l'api
-    async setForecastWeather(forecastWeather){
+    setForecastWeather(forecastWeather){
         const forecastingDatas = {
         //données méteo actuelles
         currentHour: forecastWeather.current.dt,         //heure actuelle     
@@ -24,14 +24,16 @@ export default {
         return forecastingDatas
     },
     //methode pour recupérer les données voulues dans l'api
-    async setCurrentWeather(currentWeather){
+    setCurrentWeather(currentWeather){
         const currentWeatherDatas = {
-            city: currentWeather.name,          //nom de la ville courante
+            name: currentWeather.name,          //nom de la ville courante
             currentTemp: currentWeather.main.temp,  //température actuelle
             minTemp:currentWeather.main.temp_min,   //température minimale
             maxTemp:currentWeather.main.temp_max,   //température maximale
             feelTemp:currentWeather.main.feels_like,    //température ressentie
             iconCurrentWeather:currentWeather.weather[0].icon,  //image de la météo actuelle
+            longitude:currentWeather.coord.lon,
+            latitude:currentWeather.coord.lat
         }
             return currentWeatherDatas;
     },

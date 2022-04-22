@@ -11,6 +11,4 @@ export default {
             const currentWeather = await response.json();
             return currentWeather
         },
-    
-
 }
