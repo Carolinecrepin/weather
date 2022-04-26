@@ -35,7 +35,7 @@ export default {
     },
     //methode pour voir la current météo de la ville favorite selectionnée qui prend en parametres la longitude et la latitude
     showWeatherLocationCity(city) {
-      window.location.href = `/?city=${city.coords.latitude, city.coords.longitude}`;
+      window.location.href = `/?latitude=${city.coords.latitude}&longitude=${city.coords.longitude}`;
     },
   },
 };

@@ -14,12 +14,11 @@
             forecastWeather.tempMaxDaily
           }}° Ressenti {{ currentWeather.feelTemp }}°
         </p>
-        <p>Vendredi,{{forecastWeather.currentHour}} </p>
+        <p>Vendredi,{{ forecastWeather.currentHour }}</p>
         <!--bouton pour ajouter une ville en favoris-->
         <button class="favorite-btn" @click="addToFavoriteCity">
           Ajouter aux favoris
         </button>
-        {{citySaveInLocalStorage}}
       </div>
       <div class="right-card-dashboard">
         <CurrentWeatherIcon v-bind:currentWeather="currentWeather" />
@@ -414,10 +413,10 @@ export default {
   },
   data() {
     return {
-        currentWeather: {},
-        forecastWeather: {},
-        latitude: "",
-        longitude: "",
+      currentWeather: {},
+      forecastWeather: {},
+      latitude: "",
+      longitude: "",
     };
   },
   //Api qui permet de récupérer la position actuelle en utilisant la latitude et la longitude ce qui donne la position.coords
@@ -448,8 +447,9 @@ export default {
     async addToFavoriteCity() {
       //la const cities est un objet contenant des propriétés
       const city = {
-        city: this.currentWeather.name,   //ville courante
-        coords: {                         //coordonées courante
+        city: this.currentWeather.name, //ville courante
+        coords: {
+          //coordonées courante
           latitude: this.currentWeather.latitude,
           longitude: this.currentWeather.longitude,
         },
@@ -468,8 +468,16 @@ export default {
         citySaveInLocalStorage.push(city); // on ajoute l'obj dans le tableau qui était vide
         localStorage.setItem("cities", JSON.stringify(citySaveInLocalStorage));
       }
+      console.log(localStorage)
     },
-    
+    //methode pour recuperer les paramètres de l'url (coords: latitude,longitude)
+    async getUrlParams() { 
+      const latitude = this.$route.query.latitude
+      const longitude = this.$route.query.longitude
+
+      console.log(latitude)
+      console.log(longitude)
+    },
   },
 };
 </script>

@@ -11,13 +11,13 @@ export default {
         currentIcon: forecastWeather.current.weather[0].icon,   //icone météo actuelle
         //données météo par heure
         hour: forecastWeather.hourly[0].dt,                  //heure
-        hourTemp: forecastWeather.hourly[0].temp,            //température de l'heure
+        hourTemp: Math.round(forecastWeather.hourly[0].temp),            //température de l'heure
         hourHumidity: forecastWeather.hourly[0].humidity,    //humidité de l'heure
         iconHour: forecastWeather.hourly[13].weather[0].icon,
         //données météo par jour 
         hourDaily: forecastWeather.daily[0].dt,              //heure du jour
-        tempMinDaily: forecastWeather.daily[0].temp.min,     //température minimale du jour
-        tempMaxDaily: forecastWeather.daily[0].temp.max,     //température max du jour
+        tempMinDaily: Math.round(forecastWeather.daily[0].temp.min),     //température minimale du jour
+        tempMaxDaily: Math.round(forecastWeather.daily[0].temp.max),     //température max du jour
         humidityDaily: forecastWeather.daily[0].humidity,    //taux d'humidité du jour 
         iconDaily:forecastWeather.daily[0].weather[0].icon,     //icone du jour
     }
@@ -27,13 +27,13 @@ export default {
     setCurrentWeather(currentWeather){
         const currentWeatherDatas = {
             name: currentWeather.name,          //nom de la ville courante
-            currentTemp: currentWeather.main.temp,  //température actuelle
-            minTemp:currentWeather.main.temp_min,   //température minimale
-            maxTemp:currentWeather.main.temp_max,   //température maximale
-            feelTemp:currentWeather.main.feels_like,    //température ressentie
+            currentTemp: Math.round(currentWeather.main.temp),  //température actuelle
+            minTemp:Math.round(currentWeather.main.temp_min),   //température minimale
+            maxTemp:Math.round(currentWeather.main.temp_max),   //température maximale
+            feelTemp:Math.round(currentWeather.main.feels_like),    //température ressentie
             iconCurrentWeather:currentWeather.weather[0].icon,  //image de la météo actuelle
-            longitude:currentWeather.coord.lon,
-            latitude:currentWeather.coord.lat
+            longitude:currentWeather.coord.lon,         //longitude de la météo actuelle
+            latitude:currentWeather.coord.lat           //latitude de la météo actuelle
         }
             return currentWeatherDatas;
     },
