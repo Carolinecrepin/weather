@@ -422,6 +422,7 @@ export default {
   //Api qui permet de récupérer la position actuelle en utilisant la latitude et la longitude ce qui donne la position.coords
   async mounted() {
     await this.getCurrentPosition();
+    await this.getUrlParams();
   },
   methods: {
     //methode pour récupérer la currentPosition en fonction de la latitude et la longitude
@@ -472,11 +473,11 @@ export default {
     },
     //methode pour recuperer les paramètres de l'url (coords: latitude,longitude)
     async getUrlParams() { 
-      const latitude = this.$route.query.latitude
-      const longitude = this.$route.query.longitude
-
-      console.log(latitude)
-      console.log(longitude)
+      const coords = {
+            latitude : this.$route.query.latitude,
+            longitude : this.$route.query.longitude
+      }
+      console.log(coords)
     },
   },
 };
