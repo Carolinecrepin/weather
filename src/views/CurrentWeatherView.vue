@@ -419,10 +419,25 @@ export default {
       longitude: "",
     };
   },
-  //Api qui permet de récupérer la position actuelle en utilisant la latitude et la longitude ce qui donne la position.coords
   async mounted() {
-    await this.getCurrentPosition();
     await this.getUrlParams();
+    //si il y a les parametres latitude et longitudedans l'url 
+    if (this.$route.query.latitude && this.$route.query.longitude) { 
+      const coordinates = this.$route.query;
+        this.latitude = coordinates.latitude;
+        this.longitude = coordinates.longitude;
+      //alors on va chercher la currentWeather et la forecastWeather de cette position
+      const forecastWeather = await weatherRepository.getForecastWeather(coordinates);
+      console.log(forecastWeather)
+      this.forecastWeather = weatherFactory.setForecastWeather(forecastWeather);
+
+      const currentWeather = await weatherRepository.getCurrentWeather(coordinates );
+      console.log(currentWeather)
+      this.currentWeather = weatherFactory.setCurrentWeather(currentWeather);
+      //sinon on va chercher la currentPosition qui appelle la currentWeather
+    } else {
+      await this.getCurrentPosition();
+    }
   },
   methods: {
     //methode pour récupérer la currentPosition en fonction de la latitude et la longitude
@@ -441,6 +456,7 @@ export default {
         const currentWeather = await weatherRepository.getCurrentWeather(
           coordinates
         );
+        
         this.currentWeather = weatherFactory.setCurrentWeather(currentWeather);
       });
     },
@@ -473,11 +489,10 @@ export default {
     },
     //methode pour recuperer les paramètres de l'url (coords: latitude,longitude)
     async getUrlParams() { 
-      const coords = {
-            latitude : this.$route.query.latitude,
-            longitude : this.$route.query.longitude
-      }
-      console.log(coords)
+        const latitude = this.$route.query.latitude
+        const longitude = this.$route.query.longitude
+      console.log(latitude)
+      console.log(longitude)
     },
   },
 };
