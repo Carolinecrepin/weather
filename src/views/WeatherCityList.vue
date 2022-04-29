@@ -1,5 +1,8 @@
 <template>
   <div class="favoritesCities">
+    <div class="map">
+      <MapLeaflet/>
+    </div>
     <div class="city-list">
       <h1 class="title">Liste des villes favorites</h1>
       <div class="list" v-for="(city, index) in cities" :key="index">
@@ -17,7 +20,11 @@
   </div>
 </template>
 <script>
+import MapLeaflet from "@/components/MapLeaflet.vue";
 export default {
+  components: {
+    MapLeaflet,
+  },
   data() {
     return {
       cities: [{}],
@@ -50,7 +57,7 @@ export default {
   background: linear-gradient(#0f2d57, #224a82);
 }
 .title {
-  padding: 2em;
+  padding: 1em;
   color: #caf7ff;
   font-weight: bold;
 }
@@ -79,5 +86,10 @@ export default {
 h4 {
     padding: 0.5em;;
     align-self: center;
+}
+.map {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 </style>
