@@ -1,7 +1,11 @@
 <template>
   <div class="favoritesCities">
+    <div class="search">
+        <input class="input-search" type="text" name="search" id="search" placeholder="nom d'une ville">
+        <button class="btn-search">Rechercher</button>
+    </div>
     <div class="map">
-      <MapLeaflet/>
+      <WeatherMap/>
     </div>
     <div class="city-list">
       <h1 class="title">Liste des villes favorites</h1>
@@ -20,10 +24,10 @@
   </div>
 </template>
 <script>
-import MapLeaflet from "@/components/MapLeaflet.vue";
+import WeatherMap from "@/components/WeatherMap.vue";
 export default {
   components: {
-    MapLeaflet,
+    WeatherMap,
   },
   data() {
     return {
@@ -32,6 +36,7 @@ export default {
   },
   mounted() {
     this.getFavoriteCity();
+    //this.showWeatherLocationCity();
   },
   methods: {
     getFavoriteCity() {
@@ -83,6 +88,13 @@ export default {
   padding: 0.5em;
   margin: 1em;
 }
+.btn-search {
+  display: flex;
+  background-color: #224a82;
+  color: #caf7ff;
+  border-radius: 8px;
+  padding: 0.5em;
+}
 h4 {
     padding: 0.5em;;
     align-self: center;
@@ -91,5 +103,18 @@ h4 {
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+.search {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 1em;
+}
+.input-search{
+  display: flex;
+  width:40em;
+  height: 3em;
+  border-radius: 10px;
+  margin-right: 0.5em;
 }
 </style>
