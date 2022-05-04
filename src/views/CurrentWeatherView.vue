@@ -41,10 +41,263 @@
           {{ forecastWeather.hourHumidity }}%
         </p>
       </div>
+            <div class="hours-meteo">
+        <p>
+          <b>{{ forecastWeather.hour }}</b>
+        </p>
+        <HoursWeatherIcon v-bind:forecastWeather="forecastWeather" />
+        <p>{{ forecastWeather.hourTemp }}°</p>
+        <p>
+          <img
+            src="../assets/droplet.png"
+            alt="weather-icon"
+            class="weather-icon"
+          />
+          {{ forecastWeather.hourHumidity }}%
+        </p>
+      </div>
+            <div class="hours-meteo">
+        <p>
+          <b>{{ forecastWeather.hour }}</b>
+        </p>
+        <HoursWeatherIcon v-bind:forecastWeather="forecastWeather" />
+        <p>{{ forecastWeather.hourTemp }}°</p>
+        <p>
+          <img
+            src="../assets/droplet.png"
+            alt="weather-icon"
+            class="weather-icon"
+          />
+          {{ forecastWeather.hourHumidity }}%
+        </p>
+      </div>
+            <div class="hours-meteo">
+        <p>
+          <b>{{ forecastWeather.hour }}</b>
+        </p>
+        <HoursWeatherIcon v-bind:forecastWeather="forecastWeather" />
+        <p>{{ forecastWeather.hourTemp }}°</p>
+        <p>
+          <img
+            src="../assets/droplet.png"
+            alt="weather-icon"
+            class="weather-icon"
+          />
+          {{ forecastWeather.hourHumidity }}%
+        </p>
+      </div>
+            <div class="hours-meteo">
+        <p>
+          <b>{{ forecastWeather.hour }}</b>
+        </p>
+        <HoursWeatherIcon v-bind:forecastWeather="forecastWeather" />
+        <p>{{ forecastWeather.hourTemp }}°</p>
+        <p>
+          <img
+            src="../assets/droplet.png"
+            alt="weather-icon"
+            class="weather-icon"
+          />
+          {{ forecastWeather.hourHumidity }}%
+        </p>
+      </div>
+            <div class="hours-meteo">
+        <p>
+          <b>{{ forecastWeather.hour }}</b>
+        </p>
+        <HoursWeatherIcon v-bind:forecastWeather="forecastWeather" />
+        <p>{{ forecastWeather.hourTemp }}°</p>
+        <p>
+          <img
+            src="../assets/droplet.png"
+            alt="weather-icon"
+            class="weather-icon"
+          />
+          {{ forecastWeather.hourHumidity }}%
+        </p>
+      </div>
+            <div class="hours-meteo">
+        <p>
+          <b>{{ forecastWeather.hour }}</b>
+        </p>
+        <HoursWeatherIcon v-bind:forecastWeather="forecastWeather" />
+        <p>{{ forecastWeather.hourTemp }}°</p>
+        <p>
+          <img
+            src="../assets/droplet.png"
+            alt="weather-icon"
+            class="weather-icon"
+          />
+          {{ forecastWeather.hourHumidity }}%
+        </p>
+      </div>
+      
     </div>
     <!-- card meteo jours -->
     <div class="card-row">
       <div class="day-weather">
+        <p>Aujourd'hui</p>
+        <p>
+          <img
+            src="../assets/droplet.png"
+            alt="weather-icon"
+            class="weather-icon"
+          />
+          {{ forecastWeather.humidityDaily }} %
+        </p>
+        <img
+          src="../assets/rain-icon.png"
+          alt="weather-icon"
+          width="25"
+          height="25"
+          class="weather-icon"
+        />
+        <img
+          src="../assets/rain-icon.png"
+          alt="weather-icon"
+          width="25"
+          height="25"
+          class="weather-icon"
+        />
+        <p>{{ forecastWeather.tempMinDaily }} °</p>
+        <p>{{ forecastWeather.tempMaxDaily }} °</p>
+      </div>
+            <div class="day-weather">
+        <p>Aujourd'hui</p>
+        <p>
+          <img
+            src="../assets/droplet.png"
+            alt="weather-icon"
+            class="weather-icon"
+          />
+          {{ forecastWeather.humidityDaily }} %
+        </p>
+        <img
+          src="../assets/rain-icon.png"
+          alt="weather-icon"
+          width="25"
+          height="25"
+          class="weather-icon"
+        />
+        <img
+          src="../assets/rain-icon.png"
+          alt="weather-icon"
+          width="25"
+          height="25"
+          class="weather-icon"
+        />
+        <p>{{ forecastWeather.tempMinDaily }} °</p>
+        <p>{{ forecastWeather.tempMaxDaily }} °</p>
+      </div>
+            <div class="day-weather">
+        <p>Aujourd'hui</p>
+        <p>
+          <img
+            src="../assets/droplet.png"
+            alt="weather-icon"
+            class="weather-icon"
+          />
+          {{ forecastWeather.humidityDaily }} %
+        </p>
+        <img
+          src="../assets/rain-icon.png"
+          alt="weather-icon"
+          width="25"
+          height="25"
+          class="weather-icon"
+        />
+        <img
+          src="../assets/rain-icon.png"
+          alt="weather-icon"
+          width="25"
+          height="25"
+          class="weather-icon"
+        />
+        <p>{{ forecastWeather.tempMinDaily }} °</p>
+        <p>{{ forecastWeather.tempMaxDaily }} °</p>
+      </div>
+            <div class="day-weather">
+        <p>Aujourd'hui</p>
+        <p>
+          <img
+            src="../assets/droplet.png"
+            alt="weather-icon"
+            class="weather-icon"
+          />
+          {{ forecastWeather.humidityDaily }} %
+        </p>
+        <img
+          src="../assets/rain-icon.png"
+          alt="weather-icon"
+          width="25"
+          height="25"
+          class="weather-icon"
+        />
+        <img
+          src="../assets/rain-icon.png"
+          alt="weather-icon"
+          width="25"
+          height="25"
+          class="weather-icon"
+        />
+        <p>{{ forecastWeather.tempMinDaily }} °</p>
+        <p>{{ forecastWeather.tempMaxDaily }} °</p>
+      </div>
+            <div class="day-weather">
+        <p>Aujourd'hui</p>
+        <p>
+          <img
+            src="../assets/droplet.png"
+            alt="weather-icon"
+            class="weather-icon"
+          />
+          {{ forecastWeather.humidityDaily }} %
+        </p>
+        <img
+          src="../assets/rain-icon.png"
+          alt="weather-icon"
+          width="25"
+          height="25"
+          class="weather-icon"
+        />
+        <img
+          src="../assets/rain-icon.png"
+          alt="weather-icon"
+          width="25"
+          height="25"
+          class="weather-icon"
+        />
+        <p>{{ forecastWeather.tempMinDaily }} °</p>
+        <p>{{ forecastWeather.tempMaxDaily }} °</p>
+      </div>
+            <div class="day-weather">
+        <p>Aujourd'hui</p>
+        <p>
+          <img
+            src="../assets/droplet.png"
+            alt="weather-icon"
+            class="weather-icon"
+          />
+          {{ forecastWeather.humidityDaily }} %
+        </p>
+        <img
+          src="../assets/rain-icon.png"
+          alt="weather-icon"
+          width="25"
+          height="25"
+          class="weather-icon"
+        />
+        <img
+          src="../assets/rain-icon.png"
+          alt="weather-icon"
+          width="25"
+          height="25"
+          class="weather-icon"
+        />
+        <p>{{ forecastWeather.tempMinDaily }} °</p>
+        <p>{{ forecastWeather.tempMaxDaily }} °</p>
+      </div>
+            <div class="day-weather">
         <p>Aujourd'hui</p>
         <p>
           <img
@@ -157,7 +410,7 @@ export default {
   },
   async mounted() {
     await this.getUrlParams();
-    //si il y a les parametres latitude et longitudedans l'url 
+    //si il y a les parametres latitude et longitude dans l'url 
     if (this.$route.query.latitude && this.$route.query.longitude) { 
       const coordinates = this.$route.query;
         this.latitude = coordinates.latitude;

@@ -33,7 +33,9 @@ export default {
             feelTemp:Math.round(currentWeather.main.feels_like),    //température ressentie
             iconCurrentWeather:currentWeather.weather[0].icon,  //image de la météo actuelle
             longitude:currentWeather.coord.lon,         //longitude de la météo actuelle
-            latitude:currentWeather.coord.lat           //latitude de la météo actuelle
+            latitude:currentWeather.coord.lat,           //latitude de la météo actuelle
+            description:currentWeather.weather[0].description
+
         }
             return currentWeatherDatas;
     },

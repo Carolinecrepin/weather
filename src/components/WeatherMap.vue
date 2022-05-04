@@ -2,12 +2,15 @@
     <div class="map" v-if="markers.length">"0" >
         <l-map style="height: 350px ; width: 800px" :zoom="zoom" :center="center" :bounds="bounds">
         <l-tile-layer :url="url"></l-tile-layer>
-        <l-marker v-for="(marker,index) in markers"
+        
+        <l-marker v-for="(marker,index) in markers" @click="showCurrentWeatherByCity(marker.lat, marker.lng)"
          :key="index"
          :lat-lng="[marker.lat, marker.lng]"
          :center="[marker.lat, marker.lng]"
          >
-         <l-popup>données météo de la ville en question</l-popup>
+          <l-popup>
+            infos ville ici
+          </l-popup>           
          </l-marker>
         </l-map>
     </div>
@@ -28,7 +31,7 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
-    LPopup
+    LPopup,
   },
   data () {
     return {
@@ -44,8 +47,14 @@ export default {
   },
   mounted(){
       this.addMarker();
+      this.showCurrentWeatherByCity();
   },
   methods:{
+    //au clic affiche les coords de la ville selectionnée (latitude et longitude)
+    showCurrentWeatherByCity(latitude, longitude) {
+      console.log(latitude, longitude)
+    },
+      //methode pour ajouter les markers sur la carte en fonction de la latitude et la longitude
       addMarker(){
         //je recupère les données cities du localStorage 
         let citySaveInLocalStorage = localStorage.getItem("cities");
@@ -56,7 +65,6 @@ export default {
             lat: favorite.coords.latitude,
             lng: favorite.coords.longitude
         }))
-        console.log(this.markers)
       },
   }    
 }
