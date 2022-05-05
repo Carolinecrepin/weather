@@ -8,16 +8,16 @@
          :lat-lng="[marker.lat, marker.lng]"
          :center="[marker.lat, marker.lng]"
          >
-          <l-popup>
-            infos ville ici
-          </l-popup>           
+         <div>{{currentWeather.currentTemp}}</div>          
          </l-marker>
         </l-map>
     </div>
 </template>
 
 <script>
-import {LMap, LTileLayer, LMarker, LPopup} from 'vue2-leaflet';
+import weatherFactory from "@/factory/weather.factory";
+import weatherRepository from "@/repository/weather.repository";
+import {LMap, LTileLayer, LMarker} from 'vue2-leaflet';
 import { latLng,Icon,latLngBounds,} from 'leaflet';
 
 delete Icon.Default.prototype._getIconUrl;
@@ -31,7 +31,6 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
-    LPopup,
   },
   data () {
     return {
@@ -43,29 +42,38 @@ export default {
         [	46.227638, 2.213749],
         [	50.4801153, 2.7937265],
       ]),
+      currentWeather:{},
+      forecastWeather:{},
+      latitude:"",
+      longitude:"",
     };
   },
   mounted(){
       this.addMarker();
-      this.showCurrentWeatherByCity();
+      this.showCurrentWeatherByCity(this.latitude,this.longitude);
   },
   methods:{
-    //au clic affiche les coords de la ville selectionnée (latitude et longitude)
-    showCurrentWeatherByCity(latitude, longitude) {
-      console.log(latitude, longitude)
-    },
-      //methode pour ajouter les markers sur la carte en fonction de la latitude et la longitude
-      addMarker(){
-        //je recupère les données cities du localStorage 
-        let citySaveInLocalStorage = localStorage.getItem("cities");
-        //je creer une constante qui interprête les données recues en objet
-        const plainFavorites = JSON.parse(citySaveInLocalStorage);
-        // dans cet objet je recupère uniquement les infos qui m'interressent cad la latitude et la longitude a l'aide de la fonction map 
-        this.markers = plainFavorites.map(favorite => ({
-            lat: favorite.coords.latitude,
-            lng: favorite.coords.longitude
-        }))
+    //methode pour ajouter les markers sur la carte en fonction de la latitude et la longitude
+    addMarker(){
+      //je recupère les données cities du localStorage 
+      let citySaveInLocalStorage = localStorage.getItem("cities");
+      //je creer une constante qui interprête les données recues en objet
+      const plainFavorites = JSON.parse(citySaveInLocalStorage);
+      // dans cet objet je recupère uniquement les infos qui m'interressent cad la latitude et la longitude a l'aide de la fonction map 
+      this.markers = plainFavorites.map(favorite => ({
+          lat: favorite.coords.latitude,
+          lng: favorite.coords.longitude
+      }))
       },
+    //au clic affiche les coords de la ville selectionnée (latitude et longitude)
+    async showCurrentWeatherByCity(latitude, longitude) {
+      console.log(latitude, longitude)
+      const coordinates = (this.latitude, this.longitude );
+      console.log(coordinates)
+    const currentWeather = await weatherRepository.getCurrentWeather(coordinates);
+    this.currentWeather = weatherFactory.setCurrentWeather(currentWeather);
+    console.log(this.currentWeather)
+    },
   }    
 }
 </script>

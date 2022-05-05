@@ -8,10 +8,10 @@
       <WeatherMap/>
     </div>
     <div class="city-list">
-      <h1 class="title">Favoris</h1>
+      <h2 class="title">Favoris</h2>
       <div class="list" v-for="(city, index) in cities" :key="index">
+        <!--<CurrentWeatherIcon/>-->
         <h4 class="city">{{ city.city }}</h4>
-          <p>{{city.weather.iconCurrentWeather}}</p>
           <p class="temperature">{{city.weather.currentTemp}}°c</p>
           <p>Ressenti {{city.weather.feelTemp}}°C</p>
           <p>Minimale {{city.weather.minTemp}}°C / Maximale {{city.weather.maxTemp}}°C</p>
@@ -28,18 +28,18 @@
   </div>
 </template>
 <script>
+//import CurrentWeatherIcon from "@/components/CurrentWeatherIcon.vue";
 import WeatherMap from "@/components/WeatherMap.vue";
 import weatherRepository from '@/repository/weather.repository';
 import weatherFactory from '@/factory/weather.factory'
 export default {
   components: {
     WeatherMap,
+    //CurrentWeatherIcon,
   },
   data() {
     return {
       cities: [{}],
-      forecastWeather:{},
-      currentWeather:{}
     };
   },
   mounted() {
