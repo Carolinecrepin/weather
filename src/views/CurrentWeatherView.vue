@@ -417,11 +417,9 @@ export default {
         this.longitude = coordinates.longitude;
       //alors on va chercher la currentWeather et la forecastWeather de cette position
       const forecastWeather = await weatherRepository.getForecastWeather(coordinates);
-      console.log(forecastWeather)
       this.forecastWeather = weatherFactory.setForecastWeather(forecastWeather);
 
       const currentWeather = await weatherRepository.getCurrentWeather(coordinates );
-      console.log(currentWeather)
       this.currentWeather = weatherFactory.setCurrentWeather(currentWeather);
       //sinon on va chercher la currentPosition qui appelle la currentWeather
     } else {
@@ -460,7 +458,6 @@ export default {
           longitude: this.currentWeather.longitude,
         },
       };
-      console.log(city)
       //setItem enregistre de la donnée en base navigateur
       //getItem recupérer cette donnée
       //variable qui est le tableau d'obj de cities
@@ -475,7 +472,6 @@ export default {
         citySaveInLocalStorage.push(city); // on ajoute l'obj dans le tableau qui était vide
         localStorage.setItem("cities", JSON.stringify(citySaveInLocalStorage));
       }
-      console.log(localStorage)
     },
     //methode pour recuperer les paramètres de l'url (coords: latitude,longitude)
     async getUrlParams() { 

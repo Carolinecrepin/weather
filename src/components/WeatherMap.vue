@@ -1,6 +1,6 @@
 <template>
     <div class="map" v-if="markers.length">"0" >
-        <l-map style="height: 350px ; width: 800px" :zoom="zoom" :center="center" :bounds="bounds">
+        <l-map style="height: 500px ; width: 900px" :zoom="zoom" :center="center" :bounds="bounds">
         <l-tile-layer :url="url"></l-tile-layer>
         
         <l-marker v-for="(marker,index) in markers" @click="showCurrentWeatherByCity(marker.lat, marker.lng)"
@@ -8,16 +8,25 @@
          :lat-lng="[marker.lat, marker.lng]"
          :center="[marker.lat, marker.lng]"
          >
-         <div>{{currentWeather.currentTemp}}</div>          
+         <l-popup class="popUp">
+            {{currentWeather.name}}
+              <CurrentWeatherIcon v-bind:currentWeather="currentWeather"/> 
+           <br>température actuelle: {{currentWeather.currentTemp}}°C
+           <br>Minimale: {{currentWeather.minTemp}}°C
+           <br>Maximale: {{currentWeather.maxTemp}}°C
+           <br>{{currentWeather.description}}
+         </l-popup>
+         
          </l-marker>
         </l-map>
     </div>
 </template>
 
 <script>
+import CurrentWeatherIcon from "@/components/CurrentWeatherIcon.vue";
 import weatherFactory from "@/factory/weather.factory";
 import weatherRepository from "@/repository/weather.repository";
-import {LMap, LTileLayer, LMarker} from 'vue2-leaflet';
+import {LMap, LTileLayer, LMarker, LPopup} from 'vue2-leaflet';
 import { latLng,Icon,latLngBounds,} from 'leaflet';
 
 delete Icon.Default.prototype._getIconUrl;
@@ -31,6 +40,8 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
+    LPopup,
+    CurrentWeatherIcon,
   },
   data () {
     return {
@@ -44,8 +55,6 @@ export default {
       ]),
       currentWeather:{},
       forecastWeather:{},
-      latitude:"",
-      longitude:"",
     };
   },
   mounted(){
@@ -67,12 +76,9 @@ export default {
       },
     //au clic affiche les coords de la ville selectionnée (latitude et longitude)
     async showCurrentWeatherByCity(latitude, longitude) {
-      console.log(latitude, longitude)
-      const coordinates = (this.latitude, this.longitude );
-      console.log(coordinates)
-    const currentWeather = await weatherRepository.getCurrentWeather(coordinates);
-    this.currentWeather = weatherFactory.setCurrentWeather(currentWeather);
-    console.log(this.currentWeather)
+      const coordinates = {latitude,longitude};
+      const currentWeather = await weatherRepository.getCurrentWeather(coordinates);
+      this.currentWeather = weatherFactory.setCurrentWeather(currentWeather);
     },
   }    
 }
@@ -81,5 +87,16 @@ export default {
 <style scoped>
 .map {
   margin: 2em;
+}
+.popUp {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: rgb(29, 29, 80);
+  font-weight: bolder;
+}
+img, svg {
+    vertical-align: middle;
+    width: 90px;
 }
 </style>

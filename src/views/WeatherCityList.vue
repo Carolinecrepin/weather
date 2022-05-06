@@ -10,12 +10,14 @@
     <div class="city-list">
       <h2 class="title">Favoris</h2>
       <div class="list" v-for="(city, index) in cities" :key="index">
-        <!--<CurrentWeatherIcon/>-->
-        <h4 class="city">{{ city.city }}</h4>
+        <div v-if="currentWeather">
+          <!--<CurrentWeatherIcon/>-->
+          <h4 class="city">{{ city.city }}</h4>
           <p class="temperature">{{city.weather.currentTemp}}°c</p>
           <p>Ressenti {{city.weather.feelTemp}}°C</p>
           <p>Minimale {{city.weather.minTemp}}°C / Maximale {{city.weather.maxTemp}}°C</p>
           <p>Résumé: <br>{{city.weather.description}}</p>
+        </div>
         <div class="btn-card">
           <button class="btn" @click="showWeatherLocationCity(city)">
             voir météo
@@ -40,6 +42,7 @@ export default {
   data() {
     return {
       cities: [{}],
+      currentWeather:{},
     };
   },
   mounted() {
