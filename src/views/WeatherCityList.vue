@@ -9,15 +9,16 @@
     </div>
     <div class="city-list">
       <h2 class="title">Favoris</h2>
-      <div class="list" v-for="(city, index) in cities" :key="index">
-        <div v-if="currentWeather">
-          <!--<CurrentWeatherIcon/>-->
+      <div v-if="cities.length > 0">
+      <div class="list" v-for="(city, index) in cities" :key="index" >
+     
+           <CurrentWeatherIcon v-bind:currentWeather="city.weather"/> 
           <h4 class="city">{{ city.city }}</h4>
           <p class="temperature">{{city.weather.currentTemp}}°c</p>
           <p>Ressenti {{city.weather.feelTemp}}°C</p>
           <p>Minimale {{city.weather.minTemp}}°C / Maximale {{city.weather.maxTemp}}°C</p>
           <p>Résumé: <br>{{city.weather.description}}</p>
-        </div>
+        
         <div class="btn-card">
           <button class="btn" @click="showWeatherLocationCity(city)">
             voir météo
@@ -25,39 +26,32 @@
           <button class="btn">supprimer</button>
         </div>
       </div>
+      </div>
       <button class="btn" @click="$router.go(-1)">Retour</button>
     </div>
   </div>
 </template>
 <script>
-//import CurrentWeatherIcon from "@/components/CurrentWeatherIcon.vue";
+import CurrentWeatherIcon from "@/components/CurrentWeatherIcon.vue";
 import WeatherMap from "@/components/WeatherMap.vue";
 import weatherRepository from '@/repository/weather.repository';
 import weatherFactory from '@/factory/weather.factory'
 export default {
   components: {
     WeatherMap,
-    //CurrentWeatherIcon,
+    CurrentWeatherIcon,
   },
   data() {
     return {
-      cities: [{}],
+      cities: [],
       currentWeather:{},
     };
   },
-  mounted() {
-    this.getFavoriteCity();
+  async mounted() {
     //this.showWeatherLocationCity();
-    this.getCitiesWithWeather();
+   await this.getCitiesWithWeather();
   },
   methods: {
-    //methode pour recupérer la favorite city
-   getFavoriteCity() {
-      //tableau d'obj de cities = citySaveInLocalStorage
-      let citySaveInLocalStorage = localStorage.getItem("cities");
-      //construit la valeur js en obj
-      this.cities = JSON.parse(citySaveInLocalStorage);
-    },
     //methode pour aller chercher la meteo en fonction des coordinates
     async getCitiesWithWeather(){
       let citySaveInLocalStorage = JSON.parse(localStorage.getItem("cities"))

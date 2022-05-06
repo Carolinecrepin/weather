@@ -8,7 +8,7 @@
          :lat-lng="[marker.lat, marker.lng]"
          :center="[marker.lat, marker.lng]"
          >
-         <l-popup class="popUp">
+         <l-popup class="popUp" v-if="currentWeather !== null">
             {{currentWeather.name}}
               <CurrentWeatherIcon v-bind:currentWeather="currentWeather"/> 
            <br>température actuelle: {{currentWeather.currentTemp}}°C
@@ -53,13 +53,12 @@ export default {
         [	46.227638, 2.213749],
         [	50.4801153, 2.7937265],
       ]),
-      currentWeather:{},
+      currentWeather:null,
       forecastWeather:{},
     };
   },
   mounted(){
       this.addMarker();
-      this.showCurrentWeatherByCity(this.latitude,this.longitude);
   },
   methods:{
     //methode pour ajouter les markers sur la carte en fonction de la latitude et la longitude
