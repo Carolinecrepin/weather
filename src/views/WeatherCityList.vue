@@ -1,8 +1,10 @@
 <template>
   <div class="favoritesCities">
-    <div class="search">
-        <input class="input-search" type="text" name="search" id="search" placeholder="nom d'une ville">
-        <button class="btn-search">Rechercher</button>
+    <div class="favoritesCities">
+      <input id="city-input" type="text" class="input-search" placeholder="Entrez le nom d'une ville">
+          <button class="btn-search" type="button" id="searchCity">
+            Rechercher
+          </button>
     </div>
     <div class="map">
       <WeatherMap/>
@@ -32,6 +34,8 @@
   </div>
 </template>
 <script>
+import coordinatesRepository from "@repository/coordinates.repository";
+import coordinatesFactory from "@factory/coordinates.factory";
 import CurrentWeatherIcon from "@/components/CurrentWeatherIcon.vue";
 import WeatherMap from "@/components/WeatherMap.vue";
 import weatherRepository from '@/repository/weather.repository';
@@ -45,11 +49,14 @@ export default {
     return {
       cities: [],
       currentWeather:{},
+      coordinates:{},
+      city:{},
     };
   },
   async mounted() {
     //this.showWeatherLocationCity();
    await this.getCitiesWithWeather();
+   await this.searchCity();
   },
   methods: {
     //methode pour aller chercher la meteo en fonction des coordinates
@@ -70,7 +77,13 @@ export default {
     //methode pour voir la current météo de la ville favorite selectionnée qui prend en parametres la longitude et la latitude
     showWeatherLocationCity(city) {
       window.location.href = `/?latitude=${city.coords.latitude}&longitude=${city.coords.longitude}`;
-    },        
+    },
+    async searchCityByName(city){
+      console.log(city)
+      const city = await coordinatesRepository.getPositionByCity(city);
+        this.city = coordinatesFactory.setPositionByCity(city);
+        console.log(city)
+    }     
     },
 };
 </script>
